@@ -9,8 +9,8 @@ import json
 
 load_dotenv()
 
-PROJECT_PATH = os.environ.get("PROJECT_PATH")
-os.chdir(PROJECT_PATH)
+# PROJECT_PATH = os.environ.get("PROJECT_PATH")
+# os.chdir(PROJECT_PATH)
 st.set_page_config(layout="wide")
 
 if "to_import" not in st.session_state:
