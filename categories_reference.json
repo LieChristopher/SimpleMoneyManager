@@ -1,0 +1,41 @@
+{
+    "Expense":
+        {
+            "🍜 Food": ["Lunch", "Dinner", "Eating out", "Beverages", "Breakfast", "Snack"],
+            "👬🏻 Social Life": ["Friend", "Fellowship", "Alumni", "Dues"],
+            "🐶 Pets": [],
+            "🚖 Transport": ["Bus", "Train", "Cab", "Car"],
+            "🖼 Culture": ["Books", "Movie", "Music", "Apps"],
+            "🪑 Household": ["Appliances", "Furniture", "Kitchen", "Toiletries", "Chandlery", "Rent"],
+            "🎮 Entertainment": [],
+            "🧥 Apparel": ["Clothing", "Fashion", "Shoes", "Laundry"],
+            "💄 Beauty": ["Cosmetics", "Makeup", "Accessories", "Beauty"],
+            "🧘🏼 Health": ["Health", "Yoga", "Hospital", "Medicine", "Massage"],
+            "📕 Education": ["Schooling", "Textbooks", "School supplies", "Academy"],
+            "🎁 Gift": [],
+            "Other": [],
+            "Recalibration": []
+        },
+    "Income":
+        [
+            "💰 Salary", 
+            "🏅 Bonus", 
+            "🪙 Reimbursement", 
+            "🤑 Allowance", 
+            "💵 Petty cash", 
+            "💸 Refund", 
+            "📈 Interest", 
+            "Other", 
+            "Recalibration"
+        ],
+    "Transfer-Out":
+        [
+            "GoPay",
+            "BCA",
+            "OCTO Pay",
+            "CIMB Niaga Payroll",
+            "IDR Cash",
+            "ShopeePay",
+            "Other"
+        ]
+}
