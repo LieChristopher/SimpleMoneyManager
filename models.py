@@ -4,9 +4,6 @@ import json
 
 from parse_pdf import DATEFORMAT_YMD
 
-class CURRENCY:
-    IDR = "IDR"
-
 class TransactionDataframe:
     def __init__(self, df = None):
         self.__df = pd.DataFrame(columns=["Date", "Account", "Category", "Subcategory", "Note", "IDR", "Income/Expense", "Description", "Amount", "Currency", "Account.1"])
@@ -40,7 +37,7 @@ class TransactionDataframe:
     def append(self, other_df:pd.DataFrame):
         self.__df = pd.concat([self.__df, other_df], ignore_index=True)
         self.__df.sort_values(by=["Date"], ascending=False, inplace=True)
-    def addTransaction(self, type:str="", datetime:dt.datetime=None, account_from:str="", value:float=0, category:str="", subcategory:str=None, description:str=None, note:str=None, currency:str=CURRENCY.IDR):
+    def addTransaction(self, type:str="", datetime:dt.datetime=None, account_from:str="", value:float=0, category:str="", subcategory:str=None, description:str=None, note:str=None, currency:str="IDR"):
         if self.__df.shape[0] == 0:
             self.__df = pd.DataFrame({
                 "Date": datetime,
@@ -128,7 +125,7 @@ class TransactionDataframe:
         self.__df.loc[index, "Income/Expense"] = type
         self.__df.loc[index, "Description"] = description
         self.__df.loc[index, "Amount"] = value
-        self.__df.loc[index, "Currency"] = CURRENCY.IDR
+        self.__df.loc[index, "Currency"] = "IDR"
         self.__df.loc[index, "Account.1"] = value
         # if isCurrentlyIncomeExpense & toBeIncomeExpense:
             
