@@ -2,6 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 import pandas as pd
+import datetime
 import models
 import parse_pdf
 import pymupdf
@@ -9,8 +10,8 @@ import json
 
 load_dotenv()
 
-# PROJECT_PATH = os.environ.get("PROJECT_PATH")
-# os.chdir(PROJECT_PATH)
+PROJECT_PATH = os.environ.get("PROJECT_PATH")
+os.chdir(PROJECT_PATH)
 st.set_page_config(layout="wide")
 
 if "to_import" not in st.session_state:
@@ -32,11 +33,12 @@ def unselect_individual():
     st.session_state.individual_value = models.TransactionDataframe().none_selected()
 
 # @st.cache_resource
-def get_import(imported_file, platform, password):
+def get_import(imported_files, platform, password):
     try:
-        if imported_file is not None:
-            doc = pymupdf.open(stream=imported_file.read(), filetype="pdf")
-        import_transactions(doc, platform, password)
+        if imported_files is not None:
+            for imported_file in imported_files:
+                doc = pymupdf.open(stream=imported_file.read(), filetype="pdf")
+                import_transactions(doc, platform, password)
     except Exception as e:
         st.toast("Import failed")
         st.toast(e)
@@ -91,19 +93,21 @@ def main():
         icon="📤"):
             platform = st.selectbox("Import Category",platform_list)
             password = st.text_input("Password (if needed)", type="password")
-            imported_file = st.file_uploader("Import file")
+            imported_file = st.file_uploader("Import file", accept_multiple_files=True)
             st.button("Import",
                       "importData",
                       on_click=get_import,
                       args=(imported_file, platform, password),
                       use_container_width=True,
                       )
+    df = st.session_state.to_import.getDF().copy()
+    df['Date'] = pd.to_datetime(df['Date']).dt.strftime("%Y.%m.%d %H:%M:%S")
     subcol_import[2].download_button(
         "Export",
-        st.session_state.to_import.getDF().to_csv(),
+        df.to_csv(sep="\t", index=False),
         mime="text/csv",
         icon="📩",
-        file_name="Money Manager Import.csv",
+        file_name="Money Manager Import.tsv",
         use_container_width=True,
         )
     subcol_import[3].button(
@@ -113,7 +117,8 @@ def main():
     # col_import.write("---")
     
     # col_import.data_editor(st.session_state.to_import.getDF(),
-    col_import.data_editor(to_import_with_selections(),
+    col_import.data_editor(df,
+    # col_import.data_editor(to_import_with_selections(),
                          hide_index=True,
                          column_config={"Duplicate": st.column_config.CheckboxColumn(required=True)},
                          )
